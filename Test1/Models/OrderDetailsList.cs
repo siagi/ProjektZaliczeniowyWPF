@@ -11,17 +11,34 @@ namespace Test1.Models
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class OrderDetailsList
+    using System.ComponentModel;
+
+    public partial class OrderDetailsList: INotifyPropertyChanged
     {
-        public int Id { get; set; }
+        private int id;
+        public int Id { get { return id; } set { id = value;OnPropertyChanged("Id");}}
+        private Nullable<int> productId;
         public Nullable<int> ProductId { get; set; }
+        private string productName;
         public string ProductName { get; set; }
+        private Nullable<int> quantity;
         public Nullable<int> Quantity { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public Nullable<decimal> Value { get; set; }
-        public Nullable<int> OrderId { get; set; }
-    
-        public virtual Order Order { get; set; }
+        private Nullable<decimal> price;
+        public Nullable<decimal> Price { get { return price; } set { price = value;OnPropertyChanged("Price"); } }
+        private Nullable<decimal> value;
+        public Nullable<decimal> Value { get { return value; } set { this.value = value;OnPropertyChanged("Value"); }}
+        private Nullable<int> orderId;
+        public Nullable<int> OrderId { get { return orderId; } set { orderId = value;OnPropertyChanged("OrderId"); } }
+        private Order order;
+        public Order Order { get { return order; } set { order = value;OnPropertyChanged("Order"); } }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
     }
 }

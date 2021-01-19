@@ -11,22 +11,38 @@ namespace Test1.Models
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Order
+    using System.ComponentModel;
+
+    public partial class Order: INotifyPropertyChanged
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Order()
         {
             this.OrderDetailsLists = new HashSet<OrderDetailsList>();
         }
-    
-        public int Id { get; set; }
-        public Nullable<int> CustomerId { get; set; }
-        public Nullable<System.DateTime> OrderCreate { get; set; }
-        public Nullable<System.DateTime> DispatchDate { get; set; }
-    
-        public virtual Customer Customer { get; set; }
+
+        private int id;
+        public int Id { get { return id; } set { id = value;OnPropertyChanged("Id"); }}
+        private Nullable<int> customerId;
+        public Nullable<int> CustomerId { get { return customerId; } set { customerId = value;OnPropertyChanged("CustomerId");} }
+        private Nullable<System.DateTime> orderCreate;
+        public Nullable<System.DateTime> OrderCreate { get { return orderCreate; } set { orderCreate = value;OnPropertyChanged("OrderCreate"); }}
+        private Nullable<System.DateTime> dispatchDate;
+        public Nullable<System.DateTime> DispatchDate { get { return dispatchDate; } set { dispatchDate = value;OnPropertyChanged("DispatchDate"); } }
+        private Customer customer;
+        public Customer Customer { get { return customer; } set { customer = value;OnPropertyChanged("Customer"); } }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetailsList> OrderDetailsLists { get; set; }
+        private ICollection<OrderDetailsList> orderDetailsLists;
+        public ICollection<OrderDetailsList> OrderDetailsLists { get { return orderDetailsLists; } set { orderDetailsLists = value; OnPropertyChanged("OrderDetailsLists"); } }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+
     }
 }

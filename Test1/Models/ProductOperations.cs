@@ -17,6 +17,7 @@ namespace Test1.Models
         #region GetAllProductsMethod
         public List<Product> GetAllProducts()
         {
+            Console.WriteLine("Poszło");
            List<Product> ProductsList = new List<Product>();
             try
             {
