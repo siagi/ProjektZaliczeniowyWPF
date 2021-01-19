@@ -23,13 +23,34 @@ namespace Test1
     public partial class MainWindow : Window
     {
         ProductViewModel productViewModel;
+        CustomerViewModel customerViewModel;
+        OrderViewModel orderViewModel;
+        
         public MainWindow()
         {
+            //MainViewMode mvidemo = new MainViewMode();
+            //InitializeComponent();
+            //mvidemo.name = "Main form";
+            //mvidemo.usmode = new US1Mode() { name = "UserControl form" };
+            //this.
+            //CombinedData combData = new CombinedData();
             InitializeComponent();
             Database1Entities db = new Database1Entities();
             productViewModel = new ProductViewModel();
             this.DataContext = productViewModel;
-            
+            customerViewModel = new CustomerViewModel();
+            //us1.DataContext = customerViewModel;
+            //DataContext = combData;
+            //customerViewModel.CustomersList = combData.cVMData.CustomersList;
+            //this.DataContext = productViewModel;
+            //this.DataContext = customerViewModel;
+            //orderViewModel = new OrderViewModel();
+            //us2.DataContext = orderViewModel;
+
+
+
         }
+
     }
+    
 }

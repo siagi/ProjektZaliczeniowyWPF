@@ -5,8 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Test1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" xmlns:vw="clr-namespace:Test1.Views">
+        Title="MainWindow" Height="1566" Width="800" xmlns:vw="clr-namespace:Test1.Views"
+        >
     <Grid>
-        <vw:ProductView></vw:ProductView>
+        <StackPanel>
+            <vw:NewCustomer x:Name="us1"></vw:NewCustomer>
+        </StackPanel>
+        <StackPanel Margin="0 400 0 0">
+            <vw:ProductView></vw:ProductView>
+        </StackPanel>
+        <!--<StackPanel Margin="0 0 0 0">
+            <vw:OrderView x:Name="us2"/>
+        </StackPanel>-->
+
+        <!--<StackPanel Margin="0 0 0 0">
+            <vw:OrderView x:Name="us2"/>
+        </StackPanel>-->
     </Grid>
+    
 </Window>
