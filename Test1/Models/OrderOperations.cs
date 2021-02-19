@@ -55,6 +55,26 @@ namespace Test1.Models
             }
         }
 
+        public List<OrderDetailsList> GetAllDetailProductListFromBase()
+        {
+            List<OrderDetailsList> detailProductList = new List<OrderDetailsList>();
+            try
+            {
+                var getAllDetailProductQuery = from orderDetail in db.OrderDetailsLists
+                                               select orderDetail;
+                foreach (var orderDetail in getAllDetailProductQuery)
+                {
+                    detailProductList.Add(orderDetail);
+                }
+                return detailProductList;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public List<Order> GetAllOrders()
         {
             List <Order> ordersList = new List<Order>();
@@ -75,11 +95,15 @@ namespace Test1.Models
             }
         }
 
-        public bool AddProductToDg(int id,Product selectedProduct, int quantity, decimal price, decimal totalValue/*, int orderId*/)
+        public bool AddProductToDg(int id,Product selectedProduct, int quantity, decimal price, decimal totalValue, int[] sizes,int fmXS)
         {
             bool isAdded = false;
-            
-            
+            foreach (var item in sizes)
+            {
+                
+                Console.WriteLine($"Add item to DG : {item}");
+            }
+
             try
             {
                 var newOrderDetail = new OrderDetailsList();
@@ -89,13 +113,48 @@ namespace Test1.Models
                 newOrderDetail.Quantity = quantity;
                 newOrderDetail.Price = price;
                 newOrderDetail.Value = totalValue;
+                newOrderDetail.MaleXS = sizes[0];
+                newOrderDetail.MaleS = sizes[1];
+                newOrderDetail.MaleM = sizes[2];
+                newOrderDetail.MaleL = sizes[3];
+                newOrderDetail.MaleXL = sizes[4];
+                newOrderDetail.MaleXXL = sizes[5];
+                newOrderDetail.MaleXXXL = sizes[6];
+                newOrderDetail.FemaleXS = sizes[7];
+                newOrderDetail.FemaleS = sizes[8];
+                newOrderDetail.FemaleM = sizes[9];
+                newOrderDetail.FemaleL = sizes[10];
+                newOrderDetail.FemaleXL = sizes[11];
+                newOrderDetail.FemaleXXL = sizes[12];
+                newOrderDetail.FemaleXXXL = sizes[13];
                 //newOrderDetail.OrderId = orderId;
                 db.OrderDetailsLists.Add(newOrderDetail);
+                //{ 
+                //ProductId = newOrderDetail.ProductId,
+                //ProductName = newOrderDetail.ProductName,
+                //Quantity = newOrderDetail.Quantity,
+                //Price = newOrderDetail.Price,
+                //Value = newOrderDetail.Value,
+                //MaleXS = newOrderDetail.MaleXS,
+                //MaleS = newOrderDetail.MaleS,
+                //MaleM = newOrderDetail.MaleM,
+                //MaleL= newOrderDetail.MaleL,
+                //MaleXL=newOrderDetail.MaleXL,
+                //MaleXXL = newOrderDetail.MaleXXL,
+                //MaleXXXL=newOrderDetail.MaleXXXL,
+                //FemaleXS=newOrderDetail.FemaleXS,
+                //FemaleS=newOrderDetail.FemaleS,
+                //FemaleM=newOrderDetail.FemaleM,
+                //FemaleL=newOrderDetail.FemaleL,
+                //FemaleXL=newOrderDetail.FemaleXL,
+                //FemaleXXL=newOrderDetail.FemaleXXL,
+                //FemaleXXXL=newOrderDetail.FemaleXXXL
+                //});
                 var rowEffected = db.SaveChanges();
                 isAdded = rowEffected > 0;
                 return isAdded;
+               
 
-                
 
             }
             catch (Exception ex)
@@ -106,7 +165,7 @@ namespace Test1.Models
 
         }
 
-        public bool AddOrder(DateTime createData, DateTime dispatchData, Customer currentCustomer)
+        public bool AddOrder(DateTime createData, DateTime dispatchData, Customer currentCustomer, decimal total)
         {
             bool isAdded = false;
             try
@@ -115,6 +174,7 @@ namespace Test1.Models
                 newOrder.OrderCreate = createData;
                 newOrder.DispatchDate = dispatchData;
                 newOrder.CustomerId = currentCustomer.Id;
+                newOrder.TotalAmount = total;
                 db.Orders.Add(newOrder);
                 var rowEffected = db.SaveChanges();
                 isAdded = rowEffected > 0;
@@ -170,6 +230,7 @@ namespace Test1.Models
         {
             return db.OrderDetailsLists.Count();
         }
+
 
 
     }

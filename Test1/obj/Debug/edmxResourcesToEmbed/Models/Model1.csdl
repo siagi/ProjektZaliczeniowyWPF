@@ -23,6 +23,7 @@
     <Property Name="DispatchDate" Type="DateTime" Precision="0" />
     <NavigationProperty Name="Customer" Relationship="Self.FK_Order_ToTable" FromRole="Order" ToRole="Customer" />
     <NavigationProperty Name="OrderDetailsLists" Relationship="Self.FK_OrderDetailsList_ToTable" FromRole="Order" ToRole="OrderDetailsList" />
+    <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="OrderDetailsList">
     <Key>
@@ -36,6 +37,20 @@
     <Property Name="Value" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="OrderId" Type="Int32" />
     <NavigationProperty Name="Order" Relationship="Self.FK_OrderDetailsList_ToTable" FromRole="OrderDetailsList" ToRole="Order" />
+    <Property Name="MaleXS" Type="Int32" />
+    <Property Name="MaleS" Type="Int32" />
+    <Property Name="MaleM" Type="Int32" />
+    <Property Name="MaleL" Type="Int32" />
+    <Property Name="MaleXL" Type="Int32" />
+    <Property Name="MaleXXL" Type="Int32" />
+    <Property Name="MaleXXXL" Type="Int32" />
+    <Property Name="FemaleXS" Type="Int32" />
+    <Property Name="FemaleS" Type="Int32" />
+    <Property Name="FemaleM" Type="Int32" />
+    <Property Name="FemaleL" Type="Int32" />
+    <Property Name="FemaleXL" Type="Int32" />
+    <Property Name="FemaleXXL" Type="Int32" />
+    <Property Name="FemaleXXXL" Type="Int32" />
   </EntityType>
   <EntityType Name="Product">
     <Key>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
@@ -25,6 +25,7 @@
           <Property Name="CustomerId" Type="int" />
           <Property Name="OrderCreate" Type="date" />
           <Property Name="DispatchDate" Type="date" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="OrderDetailsList">
           <Key>
@@ -36,6 +37,20 @@
           <Property Name="Quantity" Type="int" />
           <Property Name="Price" Type="money" />
           <Property Name="Value" Type="money" />
+          <Property Name="MaleXS" Type="int" />
+          <Property Name="MaleS" Type="int" />
+          <Property Name="MaleM" Type="int" />
+          <Property Name="MaleL" Type="int" />
+          <Property Name="MaleXL" Type="int" />
+          <Property Name="MaleXXL" Type="int" />
+          <Property Name="MaleXXXL" Type="int" />
+          <Property Name="FemaleXS" Type="int" />
+          <Property Name="FemaleS" Type="int" />
+          <Property Name="FemaleM" Type="int" />
+          <Property Name="FemaleL" Type="int" />
+          <Property Name="FemaleXL" Type="int" />
+          <Property Name="FemaleXXL" Type="int" />
+          <Property Name="FemaleXXXL" Type="int" />
           <Property Name="OrderId" Type="int" />
         </EntityType>
         <EntityType Name="Product">
@@ -90,8 +105,7 @@
             <End Role="OrderDetailsList" EntitySet="OrderDetailsList" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -118,6 +132,7 @@
           <Property Name="DispatchDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_Order_ToTable" FromRole="Order" ToRole="Customer" />
           <NavigationProperty Name="OrderDetailsLists" Relationship="Self.FK_OrderDetailsList_ToTable" FromRole="Order" ToRole="OrderDetailsList" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="OrderDetailsList">
           <Key>
@@ -131,6 +146,20 @@
           <Property Name="Value" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="OrderId" Type="Int32" />
           <NavigationProperty Name="Order" Relationship="Self.FK_OrderDetailsList_ToTable" FromRole="OrderDetailsList" ToRole="Order" />
+          <Property Name="MaleXS" Type="Int32" />
+          <Property Name="MaleS" Type="Int32" />
+          <Property Name="MaleM" Type="Int32" />
+          <Property Name="MaleL" Type="Int32" />
+          <Property Name="MaleXL" Type="Int32" />
+          <Property Name="MaleXXL" Type="Int32" />
+          <Property Name="MaleXXXL" Type="Int32" />
+          <Property Name="FemaleXS" Type="Int32" />
+          <Property Name="FemaleS" Type="Int32" />
+          <Property Name="FemaleM" Type="Int32" />
+          <Property Name="FemaleL" Type="Int32" />
+          <Property Name="FemaleXL" Type="Int32" />
+          <Property Name="FemaleXXL" Type="Int32" />
+          <Property Name="FemaleXXXL" Type="Int32" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -206,6 +235,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="Database1Model.Order">
               <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="OrderCreate" ColumnName="OrderCreate" />
@@ -216,6 +246,20 @@
           <EntitySetMapping Name="OrderDetailsLists">
             <EntityTypeMapping TypeName="Database1Model.OrderDetailsList">
               <MappingFragment StoreEntitySet="OrderDetailsList">
+                <ScalarProperty Name="FemaleXXXL" ColumnName="FemaleXXXL" />
+                <ScalarProperty Name="FemaleXXL" ColumnName="FemaleXXL" />
+                <ScalarProperty Name="FemaleXL" ColumnName="FemaleXL" />
+                <ScalarProperty Name="FemaleL" ColumnName="FemaleL" />
+                <ScalarProperty Name="FemaleM" ColumnName="FemaleM" />
+                <ScalarProperty Name="FemaleS" ColumnName="FemaleS" />
+                <ScalarProperty Name="FemaleXS" ColumnName="FemaleXS" />
+                <ScalarProperty Name="MaleXXXL" ColumnName="MaleXXXL" />
+                <ScalarProperty Name="MaleXXL" ColumnName="MaleXXL" />
+                <ScalarProperty Name="MaleXL" ColumnName="MaleXL" />
+                <ScalarProperty Name="MaleL" ColumnName="MaleL" />
+                <ScalarProperty Name="MaleM" ColumnName="MaleM" />
+                <ScalarProperty Name="MaleS" ColumnName="MaleS" />
+                <ScalarProperty Name="MaleXS" ColumnName="MaleXS" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />

@@ -17,6 +17,7 @@
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="Database1Model.Order">
         <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
           <ScalarProperty Name="OrderCreate" ColumnName="OrderCreate" />
@@ -27,6 +28,20 @@
     <EntitySetMapping Name="OrderDetailsLists">
       <EntityTypeMapping TypeName="Database1Model.OrderDetailsList">
         <MappingFragment StoreEntitySet="OrderDetailsList">
+          <ScalarProperty Name="FemaleXXXL" ColumnName="FemaleXXXL" />
+          <ScalarProperty Name="FemaleXXL" ColumnName="FemaleXXL" />
+          <ScalarProperty Name="FemaleXL" ColumnName="FemaleXL" />
+          <ScalarProperty Name="FemaleL" ColumnName="FemaleL" />
+          <ScalarProperty Name="FemaleM" ColumnName="FemaleM" />
+          <ScalarProperty Name="FemaleS" ColumnName="FemaleS" />
+          <ScalarProperty Name="FemaleXS" ColumnName="FemaleXS" />
+          <ScalarProperty Name="MaleXXXL" ColumnName="MaleXXXL" />
+          <ScalarProperty Name="MaleXXL" ColumnName="MaleXXL" />
+          <ScalarProperty Name="MaleXL" ColumnName="MaleXL" />
+          <ScalarProperty Name="MaleL" ColumnName="MaleL" />
+          <ScalarProperty Name="MaleM" ColumnName="MaleM" />
+          <ScalarProperty Name="MaleS" ColumnName="MaleS" />
+          <ScalarProperty Name="MaleXS" ColumnName="MaleXS" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ProductId" ColumnName="ProductId" />
           <ScalarProperty Name="ProductName" ColumnName="ProductName" />

@@ -20,6 +20,7 @@
     <Property Name="CustomerId" Type="int" />
     <Property Name="OrderCreate" Type="date" />
     <Property Name="DispatchDate" Type="date" />
+    <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="OrderDetailsList">
     <Key>
@@ -31,6 +32,20 @@
     <Property Name="Quantity" Type="int" />
     <Property Name="Price" Type="money" />
     <Property Name="Value" Type="money" />
+    <Property Name="MaleXS" Type="int" />
+    <Property Name="MaleS" Type="int" />
+    <Property Name="MaleM" Type="int" />
+    <Property Name="MaleL" Type="int" />
+    <Property Name="MaleXL" Type="int" />
+    <Property Name="MaleXXL" Type="int" />
+    <Property Name="MaleXXXL" Type="int" />
+    <Property Name="FemaleXS" Type="int" />
+    <Property Name="FemaleS" Type="int" />
+    <Property Name="FemaleM" Type="int" />
+    <Property Name="FemaleL" Type="int" />
+    <Property Name="FemaleXL" Type="int" />
+    <Property Name="FemaleXXL" Type="int" />
+    <Property Name="FemaleXXXL" Type="int" />
     <Property Name="OrderId" Type="int" />
   </EntityType>
   <EntityType Name="Product">
