@@ -8,19 +8,19 @@
         Title="MainWindow" Height="1566" Width="800" xmlns:vw="clr-namespace:Test1.Views"
         >
     <Grid>
-        <StackPanel>
+        <!--<StackPanel>
             <vw:NewCustomer x:Name="us1"></vw:NewCustomer>
-        </StackPanel>
-        <StackPanel Margin="0 400 0 0">
+        </StackPanel>-->
+        <!--<StackPanel Margin="0 400 0 0">
             <vw:ProductView></vw:ProductView>
-        </StackPanel>
+        </StackPanel>-->
         <!--<StackPanel Margin="0 0 0 0">
             <vw:OrderView x:Name="us2"/>
         </StackPanel>-->
 
-        <!--<StackPanel Margin="0 0 0 0">
-            <vw:OrderView x:Name="us2"/>
-        </StackPanel>-->
+        <StackPanel Margin="0 0 0 0">
+            <vw:OrdersListView x:Name="us2"/>
+        </StackPanel>
     </Grid>
     
 </Window>

@@ -35,17 +35,17 @@ namespace Test1
             //this.
             //CombinedData combData = new CombinedData();
             InitializeComponent();
-            Database1Entities db = new Database1Entities();
-            productViewModel = new ProductViewModel();
-            this.DataContext = productViewModel;
-            customerViewModel = new CustomerViewModel();
+            //Database1Entities db = new Database1Entities();
+            //productViewModel = new ProductViewModel();
+            //this.DataContext = productViewModel;
+            //customerViewModel = new CustomerViewModel();
             //us1.DataContext = customerViewModel;
             //DataContext = combData;
             //customerViewModel.CustomersList = combData.cVMData.CustomersList;
             //this.DataContext = productViewModel;
             //this.DataContext = customerViewModel;
-            //orderViewModel = new OrderViewModel();
-            //us2.DataContext = orderViewModel;
+            orderViewModel = new OrderViewModel();
+            us2.DataContext = orderViewModel;
 
 
 
