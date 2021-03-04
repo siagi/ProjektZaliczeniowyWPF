@@ -11,6 +11,7 @@
     <Property Name="City" Type="varchar" MaxLength="50" />
     <Property Name="Country" Type="varchar" MaxLength="50" />
     <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="NIP" Type="varchar" MaxLength="14" />
   </EntityType>
   <EntityType Name="Order">
     <Key>
@@ -21,6 +22,15 @@
     <Property Name="OrderCreate" Type="date" />
     <Property Name="DispatchDate" Type="date" />
     <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DeliveryName" Type="varchar" MaxLength="50" />
+    <Property Name="DeliveryStreet" Type="varchar" MaxLength="200" />
+    <Property Name="DeliveryPostcode" Type="varchar" MaxLength="50" />
+    <Property Name="DeliveryCity" Type="varchar" MaxLength="50" />
+    <Property Name="DeliveryCountry" Type="varchar" MaxLength="50" />
+    <Property Name="DeliveryEmail" Type="varchar" MaxLength="50" />
+    <Property Name="Status" Type="nchar" MaxLength="20" />
+    <Property Name="TrackingNumber" Type="nchar" MaxLength="30" />
+    <Property Name="CustomerName" Type="nchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="OrderDetailsList">
     <Key>
@@ -47,6 +57,7 @@
     <Property Name="FemaleXXL" Type="int" />
     <Property Name="FemaleXXXL" Type="int" />
     <Property Name="OrderId" Type="int" />
+    <Property Name="Image" Type="image" />
   </EntityType>
   <EntityType Name="Product">
     <Key>
@@ -61,6 +72,21 @@
     <Property Name="Price51_100" Type="money" />
     <Property Name="Price101_250" Type="money" />
     <Property Name="Price251_500" Type="money" />
+    <Property Name="Image" Type="image" />
+    <Property Name="FileName" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="UserSurname" Type="varchar" MaxLength="50" />
+    <Property Name="UserLogin" Type="varchar" MaxLength="50" />
+    <Property Name="UserPassword" Type="varchar" MaxLength="50" />
+    <Property Name="UserFilename" Type="varchar" MaxLength="50" />
+    <Property Name="UserImage" Type="image" />
+    <Property Name="UserRole" Type="nchar" MaxLength="20" />
   </EntityType>
   <Association Name="FK_Order_ToTable">
     <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
@@ -91,6 +117,7 @@
     <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetailsList" EntityType="Self.OrderDetailsList" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Order_ToTable" Association="Self.FK_Order_ToTable">
       <End Role="Customer" EntitySet="Customer" />
       <End Role="Order" EntitySet="Order" />

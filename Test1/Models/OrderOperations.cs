@@ -95,19 +95,21 @@ namespace Test1.Models
             }
         }
 
-        public bool AddProductToDg(int id,Product selectedProduct, int quantity, decimal price, decimal totalValue, int[] sizes,int fmXS)
+        public bool AddProductToDg(int id,Product selectedProduct, int quantity, decimal price, decimal totalValue, int[] sizes, byte[] image)
         {
             bool isAdded = false;
             foreach (var item in sizes)
             {
                 
                 Console.WriteLine($"Add item to DG : {item}");
+                
             }
 
             try
             {
                 var newOrderDetail = new OrderDetailsList();
                 newOrderDetail.Id = id;
+                
                 newOrderDetail.ProductId = selectedProduct.Id;
                 newOrderDetail.ProductName = selectedProduct.Name;
                 newOrderDetail.Quantity = quantity;
@@ -127,8 +129,10 @@ namespace Test1.Models
                 newOrderDetail.FemaleXL = sizes[11];
                 newOrderDetail.FemaleXXL = sizes[12];
                 newOrderDetail.FemaleXXXL = sizes[13];
+                newOrderDetail.Image = image;
                 //newOrderDetail.OrderId = orderId;
                 db.OrderDetailsLists.Add(newOrderDetail);
+                
                 //{ 
                 //ProductId = newOrderDetail.ProductId,
                 //ProductName = newOrderDetail.ProductName,
@@ -165,16 +169,26 @@ namespace Test1.Models
 
         }
 
-        public bool AddOrder(DateTime createData, DateTime dispatchData, Customer currentCustomer, decimal total)
+        public bool AddOrder(DateTime createData, DateTime dispatchData, Customer currentCustomer, decimal total, Enum.OrderStatus.Statuses status, string dName, string dStreet, string dPostcode, string dCity, string dCountry)
         {
             bool isAdded = false;
             try
             {
+                Console.WriteLine($"Nazwa do wysyłki: {dName}");
+                Console.WriteLine($"Nazwa klienta: {currentCustomer.Name}");
                 var newOrder = new Order();
                 newOrder.OrderCreate = createData;
                 newOrder.DispatchDate = dispatchData;
                 newOrder.CustomerId = currentCustomer.Id;
+                newOrder.CustomerName = currentCustomer.Name;
                 newOrder.TotalAmount = total;
+                newOrder.Status = status.ToString().Trim();
+                newOrder.DeliveryName = dName;
+                newOrder.DeliveryStreet = dStreet;
+                newOrder.DeliveryPostcode = dPostcode;
+                newOrder.DeliveryCity = dCity;
+                newOrder.DeliveryCountry = dCountry;
+                Console.WriteLine($"STATUS : {status.ToString()}");
                 db.Orders.Add(newOrder);
                 var rowEffected = db.SaveChanges();
                 isAdded = rowEffected > 0;
@@ -188,16 +202,44 @@ namespace Test1.Models
             }
         }
 
+        public bool UpdateOrder(Order orderToUpdate)
+        {
+            bool isUpdated = false;
+            try
+            {
+                var order = db.Orders.Find(orderToUpdate.Id);
+                Console.WriteLine($"Order to Update status : {orderToUpdate.Status}");
+                order.Status = orderToUpdate.Status;
+                var rowEffected = db.SaveChanges();
+                isUpdated = rowEffected > 0;
+                Console.WriteLine("aktualizacja w bazie?");
+                Console.WriteLine($"stataus : {order.Status}");
+                return isUpdated;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public int GetLastOrderIndex()
         {
             if (db.Orders.Count() < 1 || db.Orders.Count().Equals(null))
             {
-                return 0;
+                throw new Exception();
             }
             else
             {
                 return db.Orders.Count();
             }
+                //{
+                //    return 0;
+                //}
+                //else
+                //{
+                //return db.Orders.Count()-1;
+            //}
         }
 
         public void UpdateOrderIdInDetailList(ObservableCollection<OrderDetailsList> list)
@@ -211,18 +253,23 @@ namespace Test1.Models
             //{
             //    item.OrderId = 1;
             //}
-
+            
             foreach (var item in list)
             {
                 var detailOrderList = db.OrderDetailsLists.Find(item.Id);
                 Console.WriteLine($"Przed : {detailOrderList.ProductName} = {detailOrderList.OrderId}");
                 Console.WriteLine("Ustawiam Indeks");
-                detailOrderList.OrderId = GetLastOrderIndex();
+                int tempId = GetLastOrderIndex();
+                detailOrderList.OrderId = tempId;
                 Console.WriteLine($"Po : {detailOrderList.ProductName} = {detailOrderList.OrderId}");
                 Console.WriteLine("Ustawilem Indeks");
                 db.SaveChanges();
                 Console.WriteLine("Zapisałem Indeks");
+
+
+                
             }
+            
 
         }
 

@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Customers">
       <EntityTypeMapping TypeName="Database1Model.Customer">
         <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="NIP" ColumnName="NIP" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Street" ColumnName="Street" />
@@ -17,6 +18,15 @@
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="Database1Model.Order">
         <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="TrackingNumber" ColumnName="TrackingNumber" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="DeliveryEmail" ColumnName="DeliveryEmail" />
+          <ScalarProperty Name="DeliveryCountry" ColumnName="DeliveryCountry" />
+          <ScalarProperty Name="DeliveryCity" ColumnName="DeliveryCity" />
+          <ScalarProperty Name="DeliveryPostcode" ColumnName="DeliveryPostcode" />
+          <ScalarProperty Name="DeliveryStreet" ColumnName="DeliveryStreet" />
+          <ScalarProperty Name="DeliveryName" ColumnName="DeliveryName" />
           <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
@@ -28,6 +38,7 @@
     <EntitySetMapping Name="OrderDetailsLists">
       <EntityTypeMapping TypeName="Database1Model.OrderDetailsList">
         <MappingFragment StoreEntitySet="OrderDetailsList">
+          <ScalarProperty Name="Image" ColumnName="Image" />
           <ScalarProperty Name="FemaleXXXL" ColumnName="FemaleXXXL" />
           <ScalarProperty Name="FemaleXXL" ColumnName="FemaleXXL" />
           <ScalarProperty Name="FemaleXL" ColumnName="FemaleXL" />
@@ -55,6 +66,8 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="Database1Model.Product">
         <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Specification" ColumnName="Specification" />
@@ -64,6 +77,20 @@
           <ScalarProperty Name="Price51_100" ColumnName="Price51_100" />
           <ScalarProperty Name="Price101_250" ColumnName="Price101_250" />
           <ScalarProperty Name="Price251_500" ColumnName="Price251_500" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="Database1Model.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+          <ScalarProperty Name="UserImage" ColumnName="UserImage" />
+          <ScalarProperty Name="UserFilename" ColumnName="UserFilename" />
+          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+          <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
+          <ScalarProperty Name="UserSurname" ColumnName="UserSurname" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

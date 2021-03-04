@@ -25,7 +25,7 @@ namespace Test1.Models
                                   select product;
                 foreach(var product in getAllQuery)
                 {
-                    ProductsList.Add(new Product { Id = product.Id, Name = product.Name, Specification = product.Specification, Price6_10 = product.Price6_10, Price11_25 = product.Price11_25, Price26_50 = product.Price26_50, Price51_100 = product.Price51_100, Price101_250 = product.Price101_250, Price251_500 = product.Price251_500 });
+                    ProductsList.Add(new Product { Id = product.Id, Name = product.Name, Specification = product.Specification, Price6_10 = product.Price6_10, Price11_25 = product.Price11_25, Price26_50 = product.Price26_50, Price51_100 = product.Price51_100, Price101_250 = product.Price101_250, Price251_500 = product.Price251_500,Image = product.Image, FileName = product.FileName });
                 }
 
                 return ProductsList;
@@ -45,7 +45,9 @@ namespace Test1.Models
             bool isAdded = false;
             try
             {
+
                 var newProduct = new Product();
+                
                 newProduct.Name = product.Name;
                 newProduct.Specification = product.Specification;
                 newProduct.Price6_10 = product.Price6_10;
@@ -54,6 +56,8 @@ namespace Test1.Models
                 newProduct.Price51_100 = product.Price51_100;
                 newProduct.Price101_250 = product.Price101_250;
                 newProduct.Price251_500 = product.Price251_500;
+                newProduct.Image = product.Image;
+                newProduct.FileName = product.FileName;
 
                 db.Products.Add(newProduct);
                 var rowsEffected = db.SaveChanges();
@@ -93,6 +97,9 @@ namespace Test1.Models
                         Price51_100 = productToFind.Price51_100,
                         Price101_250 = productToFind.Price101_250,
                         Price251_500 = productToFind.Price251_500,
+                        Image = productToFind.Image,
+                        FileName = productToFind.FileName
+
                     };
                     
                 }
@@ -126,6 +133,8 @@ namespace Test1.Models
                 product.Price51_100 = productToUpdate.Price51_100;
                 product.Price101_250 = productToUpdate.Price101_250;
                 product.Price251_500 = productToUpdate.Price251_500;
+                product.Image = productToUpdate.Image;
+                product.FileName = productToUpdate.FileName;
 
                 var rowsEffected = db.SaveChanges();
                 isUpdated = rowsEffected > 0;
