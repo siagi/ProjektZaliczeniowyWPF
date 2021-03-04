@@ -1,26 +1,260 @@
 ﻿<Window x:Class="Test1.MainWindow"
+        xml:lang="pl-PL"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Test1"
+        xmlns:local="clr-namespace:Test1.ViewModels"
+       
         mc:Ignorable="d"
-        Title="MainWindow" Height="1566" Width="800" xmlns:vw="clr-namespace:Test1.Views"
+        Title="MainWindow" Height="1566" Width="1100" xmlns:vw="clr-namespace:Test1.Views"
         >
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type local:CustomerViewModel}">
+            <vw:NewCustomer/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:CustomerViewModelSecond}">
+            <vw:AddNewCustomerView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type local:OrderViewModelSecond}">
+            <vw:OrdersListView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:OrderViewModel}">
+            <vw:OrderView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:ProductViewModel}">
+            <vw:ProductsListView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type local:UserControl1}">
+            <vw:SummaryView/>
+        </DataTemplate>
+
+        <!--Style TOP MENU -->
+        <Style x:Key="IconButton1" TargetType="{x:Type Button}">
+
+            <Setter Property="Foreground" Value="#000"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="C:\Users\48570\source\repos\Test1\Test1\Assets\poprawaIcon1.jpg"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="imageBorder" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="imageBorder">
+                                    <Setter.Value>
+                                        <ImageBrush ImageSource="C:\Users\48570\source\repos\Test1\Test1\Assets\poprawaIcon1over.jpg"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="IconButton2" TargetType="{x:Type Button}">
+
+            <Setter Property="Foreground" Value="#000"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="C:\Users\48570\source\repos\Test1\Test1\Assets\poprawaIcon2.jpg"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="imageBorder" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="imageBorder">
+                                    <Setter.Value>
+                                        <ImageBrush ImageSource="C:\Users\48570\source\repos\Test1\Test1\Assets\poprawaIcon2over.jpg"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="IconButton3" TargetType="{x:Type Button}">
+
+
+            <Setter Property="Foreground" Value="#000"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="C:\Users\48570\source\repos\Test1\Test1\Assets\poprawaIcon5.jpg"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="imageBorder" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="imageBorder">
+                                    <Setter.Value>
+                                        <ImageBrush ImageSource="C:\Users\48570\source\repos\Test1\Test1\Assets\poprawaIcon5over.jpg"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="IconButton4" TargetType="{x:Type Button}">
+
+            <Setter Property="Foreground" Value="#000"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="C:\Users\48570\source\repos\Test1\Test1\Assets\poprawaIcon4.jpg"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="imageBorder" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="imageBorder">
+                                    <Setter.Value>
+                                        <ImageBrush ImageSource="C:\Users\48570\source\repos\Test1\Test1\Assets\poprawaIcon4over.jpg"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+        <!--<DataTemplate DataType="{x:Type local:ProductViewModel}">
+            <vw:ProductsListView/>
+        </DataTemplate>-->
+        <Style x:Key="Leftbuttons" TargetType="{x:Type Button}">
+
+            <Setter Property="Foreground" Value="#000"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="buttonleftgrey.jpg"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="imageBorder" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="imageBorder">
+                                    <Setter.Value>
+                                        <ImageBrush ImageSource="C:\Users\48570\source\repos\Test1\Test1\Assets\buttonleftred.jpg"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <!--<StackPanel>
-            <vw:NewCustomer x:Name="us1"></vw:NewCustomer>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition/>
+            
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel/>
+        <StackPanel x:Name="navigation" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource IconButton1}" Width="109" Height="24" Margin="25 0 25 0" Command="{Binding UserControl1ViewCommand}"/>
+                <Button Style="{StaticResource IconButton2}" Width="93" Height="20" Margin="25 0 25 0" Command="{Binding OrdersListViewCommand}" />
+                <Button Style="{StaticResource IconButton3}" Width="80" Height="22" Margin="25 0 25 0" Command="{Binding ProductViewCommand}" />
+                <Button Style="{StaticResource IconButton4}" Width="62" Height="20" Margin="25 0 25 0" Command="{Binding NewCustomerCommand}" />
+
+
+
+
+
+            </StackPanel>
+
+
+        </StackPanel>
+        <ContentControl x:Name="Pages" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1000" Height="1500" Content="{Binding SelectedViewModel}" Margin="0 50 0 0"/>
+
+
+        <Rectangle Fill="#81d8b8" HorizontalAlignment="Left" Height="56" Margin="103,10,0,0" VerticalAlignment="Top" Width="2"/>
+        <Image HorizontalAlignment="Left" Height="39" VerticalAlignment="Top" Width="73" Margin="10,20,0,0" Source="logo.jpg" Stretch="Fill" StretchDirection="DownOnly"/>
+        <Rectangle Fill="#ff86a5" HorizontalAlignment="Left" Height="56" Margin="105,10,0,0" VerticalAlignment="Top" Width="2"/>
+        <Button HorizontalAlignment="Left" Margin="0,39,0,0" Grid.Row="1" VerticalAlignment="Top" Width="105" Height="99" Style="{StaticResource Leftbuttons}" Command="{Binding OrderViewCommand}">
+            <TextBlock FontSize="13" FontWeight="Bold" Foreground="#fff" TextWrapping="Wrap" Text="Dodaj zamówienie" Width="80" Height="37"/>
+        </Button>
+        <Button HorizontalAlignment="Left" Margin="0,138,0,0" Grid.Row="1" VerticalAlignment="Top" Width="105" Height="99" Style="{StaticResource Leftbuttons}" Command="{Binding ProductViewCommand}">
+            <Button.Background>
+                <ImageBrush ImageSource="buttonleftgrey.jpg"/>
+            </Button.Background>
+            <TextBlock FontSize="13" FontWeight="Bold" Foreground="#fff" TextWrapping="Wrap" Text="Dodaj produkt" Width="80" Height="37"/>
+
+        </Button>
+        <Button HorizontalAlignment="Left" Margin="0,237,0,0" Grid.Row="1" VerticalAlignment="Top" Width="105" Height="99" Style="{StaticResource Leftbuttons}" Command="{Binding AddNewCustomerViewCommand}">
+            <Button.Background>
+                <ImageBrush ImageSource="buttonleftgrey.jpg"/>
+            </Button.Background>
+            <TextBlock FontSize="13" FontWeight="Bold" Foreground="#fff" TextWrapping="Wrap" Text="Dodaj klienta" Width="80" Height="37"/>
+        </Button>
+        <Rectangle Fill="#81d8b8" Height="2" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Margin="0,71,0,6"/>
+        <Rectangle Fill="#ff86a5" Height="2" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Margin="0,74,0,4"/>
+
+    </Grid>
+
+    <!--<StackPanel>
+            <vw:NewCustomer x:Name="us1" Height="888" Margin="0 300 0 0"/>
+            
         </StackPanel>-->
-        <!--<StackPanel Margin="0 400 0 0">
-            <vw:ProductView></vw:ProductView>
+
+    <!--<StackPanel Margin="0 200 0 0">
+            <vw:ProductView x:Name="productData"/>
         </StackPanel>-->
-        <!--<StackPanel Margin="0 0 0 0">
+    <!--<StackPanel Margin="0 10 0 0">
+            <vw:ProductsListView x:Name="productsListData"/>
+        </StackPanel>-->
+    <!--<StackPanel Margin="0 0 0 0">
             <vw:OrderView x:Name="us2"/>
         </StackPanel>-->
 
-        <StackPanel Margin="0 0 0 0">
+    <!--<StackPanel Margin="0 0 0 0">
             <vw:OrdersListView x:Name="us2"/>
-        </StackPanel>
-    </Grid>
-    
+        </StackPanel>-->
+    <!--<StackPanel>
+        <vw:AddNewCustomerView x:Name="AddNewCustomer"></vw:AddNewCustomerView>
+    </StackPanel>-->
+
+
 </Window>

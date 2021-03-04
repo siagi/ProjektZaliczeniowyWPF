@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,10 +23,12 @@ namespace Test1
     /// </summary>
     public partial class MainWindow : Window
     {
-        ProductViewModel productViewModel;
-        CustomerViewModel customerViewModel;
-        OrderViewModel orderViewModel;
-        
+        //ProductViewModel productViewModel;
+        //CustomerViewModel customerViewModel;
+        //OrderViewModel orderViewModel;
+        //ProductViewModel productsListViewModel;
+        //CustomerViewModel addNewCustomerViewModel;
+
         public MainWindow()
         {
             //MainViewMode mvidemo = new MainViewMode();
@@ -35,17 +38,26 @@ namespace Test1
             //this.
             //CombinedData combData = new CombinedData();
             InitializeComponent();
+            this.DataContext = new NavigationViewModel();
+
+            //CultureInfo.CurrentCulture = new CultureInfo("pl-PL", false);
             //Database1Entities db = new Database1Entities();
             //productViewModel = new ProductViewModel();
-            //this.DataContext = productViewModel;
+            //productData.DataContext = productViewModel;
+            //productsListViewModel = new ProductViewModel();
+            //productsListData.DataContext = productsListViewModel;
             //customerViewModel = new CustomerViewModel();
             //us1.DataContext = customerViewModel;
+
+            //addNewCustomerViewModel = new CustomerViewModel();
+            //AddNewCustomer.DataContext = addNewCustomerViewModel;
+
             //DataContext = combData;
             //customerViewModel.CustomersList = combData.cVMData.CustomersList;
             //this.DataContext = productViewModel;
             //this.DataContext = customerViewModel;
-            orderViewModel = new OrderViewModel();
-            us2.DataContext = orderViewModel;
+            //orderViewModel = new OrderViewModel();
+            //us2.DataContext = orderViewModel;
 
 
 
