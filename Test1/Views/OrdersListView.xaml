@@ -1,0 +1,598 @@
+﻿<UserControl x:Class="Test1.Views.OrdersListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Test1.Views"
+     
+             xmlns:viewmodel="clr-namespace:Test1.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="1500" Width="1000">
+
+    <UserControl.Resources>
+        <viewmodel:OrderViewModel x:Key="ordervmodel"></viewmodel:OrderViewModel>
+
+        <!--ComboBox Style-->
+
+        <Style x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+                            <Border
+                          x:Name="Border"
+                          Grid.ColumnSpan="2"
+                          CornerRadius="10"
+                          Background="{TemplateBinding Background}"
+                          BorderBrush="#81d8b8"
+                          BorderThickness="2" 
+                        />
+
+                            <Path
+                            x:Name="Arrow"
+                            Grid.Column="1"    
+                            Fill="#81d8b8"
+                            Stroke="#81d8b8"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M 0 0 L 4 4 L 8 0 Z"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="TextBox">
+            <Border x:Name="PART_ContentHost" Focusable="True" Background="red"/>
+        </ControlTemplate>
+
+        <Style x:Key="theComboBox" TargetType="{x:Type ComboBox}">
+            <Setter Property="Foreground" Value="#333" />
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="MinWidth" Value="100"/>
+            <Setter Property="MinHeight" Value="30"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            
+                                <ToggleButton
+                            Cursor="Hand"
+                            Name="ToggleButton"
+                            BorderBrush="#000"
+                            Background="#fff"
+                            Foreground="{TemplateBinding Foreground}"
+                            Style="{StaticResource ComboBoxToggleButton}"
+                            Grid.Column="2"
+                            Focusable="false"
+                            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                            ClickMode="Press"/>
+                           
+                                <ContentPresenter
+                            Name="ContentSite"
+                            IsHitTestVisible="False"
+                            
+                            Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            Margin="10,3,30,3"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left" />
+                            
+                            <TextBox x:Name="PART_EditableTextBox"
+                            Style="{x:Null}"
+                            Template="{StaticResource ComboBoxTextBox}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="3,3,23,3"
+                            Focusable="True"                               
+                            Visibility="Hidden"
+                            IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                              
+                            <Popup
+                            Name="Popup"
+                            Placement="Center"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            AllowsTransparency="True"
+                            Focusable="False"
+                            PopupAnimation="Fade">
+                                <Grid
+                              Name="DropDown"
+                              SnapsToDevicePixels="True"               
+                              MinWidth="{TemplateBinding ActualWidth}"
+                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border
+                                    CornerRadius="10"
+                                    x:Name="DropDownBorder"
+                                    Background="White"
+                                    BorderThickness="1"
+                                    BorderBrush="#F6F6F6"
+                                    />
+                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                    
+                                </Grid>
+                            </Popup>
+                            
+                        </Grid>
+                            
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                            </Trigger>
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </Trigger>
+                            <Trigger Property="IsEditable" Value="true">
+                                <Setter Property="IsTabStop" Value="false"/>
+                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                            
+                    </ControlTemplate>
+                        
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="theComboBoxItem" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border
+                        Name="Border"
+                        Padding="5"
+                        Margin="2"
+                        BorderThickness="2,0,0,0"
+                        CornerRadius="10"
+                        Background="#fff"
+                        BorderBrush="Transparent">
+                            <TextBlock TextAlignment="Left">
+                            <ContentPresenter />
+                            </TextBlock>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#B3CB37"/>
+                                <Setter TargetName="Border" Property="Background" Value="#000"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--ComboBox Style End-->
+
+        <Style x:Key="AktualizujButton" TargetType="Button">
+
+            <Setter Property="Foreground" Value="#b3b3b3"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="borderMain" CornerRadius="10" Background="#fff" BorderThickness="2" BorderBrush="#b3b3b3">
+                            <ContentPresenter Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#81d8b8"/>
+                                <Setter Property="BorderBrush" TargetName="borderMain" Value="#81d8b8"/>
+                            </Trigger>
+                           <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="#ff86a5"/>
+                                <Setter Property="BorderBrush" TargetName="borderMain" Value="#ff86a5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+        <Style x:Key="LBText" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+
+        <Style x:Key="LBText_color" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="Textbox1">
+           
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Foreground" Value="#81d8b8"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="MinHeight" Value="20"/>
+            <Setter Property="MinWidth" Value="100"/>
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border" CornerRadius="10" BorderBrush="#ff86a5" BorderThickness="2" Background="#fff">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        
+                        <ControlTemplate.Triggers>
+
+                            <!--<DataTrigger Binding="{Binding Status}" Value="Nowe">
+                                <Setter Property="Foreground" Value="#556371" />
+                                <Setter Property="Background" Value="#e1e1e1"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Status}" Value="Produkcja">
+                                <Setter Property="Foreground" Value="#feacab" />
+                                <Setter Property="Background" Value="#fbe5e5"/>
+                            </DataTrigger>-->
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FFF"/>
+                                <Setter Property="Foreground" Value="#ff86a5" />
+                                <Setter Property="Background" Value="#b3b3b3" />
+
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" TargetName="border" Value="Blue"/>
+                            </Trigger>
+                            
+                                
+                           
+
+                        </ControlTemplate.Triggers>
+                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            
+        </Style>
+
+        <!--<Style x:Key="LBText_color2" TargetType="{x:Type TextBox}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+            <Setter Property="Background" Value="#81d8b8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border CornerRadius="10">
+                            <TextBox/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            
+        </Style>-->
+
+        <Style x:Key="LBPath" TargetType="{x:Type Path}">
+            <Setter Property="Fill" Value="#C2C3C3"/>
+            <Setter Property="Stretch" Value="Uniform"/>
+            <!--<Setter Property="Height" Value="25" />-->
+        </Style>
+
+        <Style x:Key="DataGridStyle1" TargetType="{x:Type DataGrid}">
+            <Setter Property="Foreground" Value="#000"/>
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="IsHitTestVisible" Value="False"/>
+            <Setter Property="RowHeaderWidth" Value="0"/>
+   
+
+
+
+        </Style>
+        
+        <Style x:Key="ColumnHeaderMale" TargetType="DataGridColumnHeader">
+
+            <Setter Property="Background" Value="#fff"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="#b3b3b3"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#81d8b8"/>
+            
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#b3b3b3"/>
+                    <Setter Property="ToolTip" Value="Click to sort."/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ColumnHeaderFemale" TargetType="DataGridColumnHeader">
+
+            <Setter Property="Background" Value="#fff"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="#b3b3b3"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#ff86a5" />
+            
+
+            <!--<Setter Property="Foreground" Value="Blue"/>
+            
+            <Setter Property="FontSize" Value="18" />-->
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="ToolTip" Value="Click to sort."/>
+                    <Setter Property="Foreground" Value="#b3b3b3"/>
+                    
+
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style  TargetType="DataGridColumnHeader">
+
+            <Setter Property="Background" Value="#fff"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="#b3b3b3"/>
+            <Setter Property="BorderThickness" Value="0"/>
+           
+                
+        
+            <!--<Setter Property="Foreground" Value="Blue"/>
+            
+            <Setter Property="FontSize" Value="18" />-->
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="ToolTip" Value="Click to sort."/>
+                    <Setter Property="Foreground" Value="#b3b3b3"/>
+
+
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+       
+        <Style TargetType="{x:Type DataGridCell}">
+            <!--<Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+            <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+            <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>-->
+
+
+            <Setter Property="Template">
+                
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Border BorderThickness="1" BorderBrush="#b3b3b3" CornerRadius="5" Margin="2" VerticalAlignment="{TemplateBinding VerticalAlignment}" Height="40" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" >
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <DropShadowBitmapEffect x:Key="DropShadowListItem" Softness="2" ShadowDepth="1" Color="LightGray" Direction="260"/>
+        <Style TargetType="{x:Type ListBoxItem}">
+            <!--<Setter Property="BitmapEffect" Value="{StaticResource DropShadowListItem}"/>-->
+            <!--<Setter Property="Height" Value="50"/>-->
+            <Setter Property="Width" Value="950"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                            <Expander>
+                                
+                                <Expander.Header>
+                                    <Border x:Name="borderExpanderHeader" Background="#fff" CornerRadius="10">
+                                        <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding Id}" Style="{StaticResource LBText}"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding OrderCreate,StringFormat={}{0:dd-MM-yyyy}}" Style="{StaticResource LBText}"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding DispatchDate,StringFormat={}{0:dd-MM-yyyy}}" Style="{StaticResource LBText}"/>
+                                        <TextBlock Grid.Column="3" Text="{Binding TotalAmount,StringFormat={}{0:C2}}" Style="{StaticResource LBText_color}"/>
+                                        <TextBlock Grid.Column="4" Text="{Binding Customer.Name}" Style="{StaticResource LBText_color}"/>
+
+                                        <TextBox x:Name="textBoxZmiana" IsHitTestVisible="False" IsReadOnly="True" Grid.Column="5" Text="{Binding Status}" Style="{StaticResource Textbox1}"/>
+                                            <ComboBox Grid.Column="6" ItemsSource="{Binding Source={StaticResource enmStatuses}}"  SelectedValue="{Binding Path=Status}"  Style="{StaticResource theComboBox}" Foreground="#b3b3b3" FontWeight="Bold"/>
+                                        <Button DataContext="{StaticResource ordervmodel}" Grid.Column="7" Content="Aktualizuj" Command="{Binding Path=UpdateOrderStatus}" Width="70" HorizontalAlignment="Left" Style="{StaticResource AktualizujButton}"/>
+                                       
+                                       
+                                    </Grid>
+                                        
+                                    </Border>
+                                    
+                                </Expander.Header>
+                                
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel>
+                                            <TextBlock  Margin="0 10 0 10" FontSize="13" Foreground="#b3b3b3" FontWeight="Bold" Text="Dane klienta :"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Nazwa : "/>
+                                        <TextBox Text="{Binding Customer.Name}" Background="Transparent" BorderThickness="0" IsReadOnly="True"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Ulica : "/>
+                                        <TextBox Text="{Binding Customer.Street}" Background="Transparent" BorderThickness="0" IsReadOnly="True"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Kod pocztowy : "/>
+                                        <TextBox Text="{Binding Customer.Postcode}" Background="Transparent" BorderThickness="0" IsReadOnly="True"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Miasto : "/>
+                                        <TextBox Text="{Binding Customer.City}" Background="Transparent" BorderThickness="0" IsReadOnly="True"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Państwo : "/>
+                                        <TextBox Text="{Binding Customer.Country}" Background="Transparent" BorderThickness="0" IsReadOnly="True"/>
+                                    </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel Margin="20 0 0 0">
+                                            <TextBlock  Margin="0 10 0 10" FontSize="13" Foreground="#b3b3b3" FontWeight="Bold" Text="Dane do wysyłki:"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Nazwa : "/>
+                                                <TextBox Text="{Binding DeliveryName}" Background="Transparent" BorderThickness="0" IsReadOnly="True"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Ulica : "/>
+                                                <TextBox Text="{Binding DeliveryStreet}" Background="Transparent" BorderThickness="0" IsReadOnly="True"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Kod pocztowy : "/>
+                                                <TextBox Text="{Binding DeliveryPostcode}" Background="Transparent" BorderThickness="0" IsReadOnly="True"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Miasto : "/>
+                                                <TextBox Text="{Binding DeliveryCity}" Background="Transparent" BorderThickness="0" IsReadOnly="True"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Państwo : "/>
+                                                <TextBox Text="{Binding DeliveryCountry}" Background="Transparent" BorderThickness="0" IsReadOnly="True"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <TextBlock  FontSize="13" Margin="0 10 0 10" Foreground="#b3b3b3" FontWeight="Bold" Text="Specyfikacja zamówienia :"/>
+                                    <DataGrid  ItemsSource="{Binding OrderDetailsLists}" CanUserAddRows="False" AutoGenerateColumns="False" Style="{StaticResource DataGridStyle1}" AlternatingRowBackground="#f6f3f3" AlternationCount="2" >
+                                        
+                                        <DataGrid.Columns>
+                                            <!--<DataGridTextColumn Binding="{Binding Id}" Header="asdsad"/>-->
+                                            <DataGridTemplateColumn IsReadOnly="True">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        
+                                                            <Image Source="{Binding Image}" Height="30" Margin="2" Width="30"/>
+                                                        
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            
+                                            
+                                            
+                                            
+                                            <!--<DataGridTextColumn Binding="{Binding Image}" Header="Zdjecie" Width="125"/>-->
+                                            <DataGridTextColumn Binding="{Binding ProductName}" Header="Produkt" Width="95"/>
+                                            <DataGridTextColumn Binding="{Binding Quantity}" Header="Ilość" Width="50"/>
+                                            <DataGridTextColumn Binding="{Binding Price,StringFormat={}{0:C2}}" Header="Cena" Width="70"/>
+                                            <DataGridTextColumn Binding="{Binding Value,StringFormat={}{0:C2}}" Header="Wartość" Width="80"/>
+                                            <DataGridTextColumn Binding="{Binding MaleXS}" Header="XS" HeaderStyle="{StaticResource ColumnHeaderMale}"/>
+                                            <DataGridTextColumn Binding="{Binding MaleS}" Header="S" HeaderStyle="{StaticResource ColumnHeaderMale}"/>
+                                            <DataGridTextColumn Binding="{Binding MaleM}" Header="M" HeaderStyle="{StaticResource ColumnHeaderMale}"/>
+                                            <DataGridTextColumn Binding="{Binding MaleL}" Header="L" HeaderStyle="{StaticResource ColumnHeaderMale}"/>
+                                            <DataGridTextColumn Binding="{Binding MaleXL}" Header="XL" HeaderStyle="{StaticResource ColumnHeaderMale}"/>
+                                            <DataGridTextColumn Binding="{Binding MaleXXL}" Header="XXL" HeaderStyle="{StaticResource ColumnHeaderMale}"/>
+                                            <DataGridTextColumn Binding="{Binding MaleXXXL}" Header="XXXL" HeaderStyle="{StaticResource ColumnHeaderMale}"/>
+                                            <DataGridTextColumn Binding="{Binding FemaleXS}" Header="XS" HeaderStyle="{StaticResource ColumnHeaderFemale}"/>
+                                            <DataGridTextColumn Binding="{Binding FemaleS}" Header="S" HeaderStyle="{StaticResource ColumnHeaderFemale}"/>
+                                            <DataGridTextColumn Binding="{Binding FemaleM}" Header="M" HeaderStyle="{StaticResource ColumnHeaderFemale}"/>
+                                            <DataGridTextColumn Binding="{Binding FemaleL}" Header="L" HeaderStyle="{StaticResource ColumnHeaderFemale}"/>
+                                            <DataGridTextColumn Binding="{Binding FemaleXL}" Header="XL" HeaderStyle="{StaticResource ColumnHeaderFemale}"/>
+                                            <DataGridTextColumn Binding="{Binding FemaleXXL}" Header="XXL" HeaderStyle="{StaticResource ColumnHeaderFemale}"/>
+                                            <DataGridTextColumn Binding="{Binding FemaleXXXL}" Header="XXXL" HeaderStyle="{StaticResource ColumnHeaderFemale}"/>
+                                            
+                                        </DataGrid.Columns>
+                                       
+                                    </DataGrid>
+                                    <Separator Margin="5"/>
+                                </StackPanel>
+                                
+
+                            </Expander>
+                            
+                        </Border>
+                        
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#fff"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="borderExpanderHeader"  Property="Background" Value="#f6f3f3"/>
+                            </Trigger>
+                            
+                        </ControlTemplate.Triggers>
+                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+        
+
+
+
+
+
+
+    </UserControl.Resources>
+    <!--<Grid>
+        <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="100"/>
+        <ColumnDefinition Width="100"/>
+        <ColumnDefinition Width="100"/>
+        <ColumnDefinition Width="100"/>
+        <ColumnDefinition Width="100"/>
+        <ColumnDefinition Width="100"/>
+    </Grid.ColumnDefinitions>
+    <TextBlock Grid.Column="0" Text="sss" />
+    <TextBlock Grid.Column="1" Text="sss"/>
+    <TextBlock Grid.Column="2" Text="sss"/>
+    <TextBlock Grid.Column="3" Text="sss"/>
+    <TextBlock Grid.Column="4" Text="sss"/>-->
+
+    <StackPanel Width="1000">
+        <StackPanel Orientation="Horizontal" Width="840" HorizontalAlignment="Left" Margin="23 0 0 0" VerticalAlignment="Top">
+            <Label Content="Id zamówienia" Width="120"/>
+            <Label Content="Data zamówienia" Width="120"/>
+            <Label Content="Data wysyłki" Width="120"/>
+            <Label Content="Wartość zamówienia" Width="120"/>
+            <Label Content="Klient" Width="120"/>
+            <Label Content="Status" Width="120"/>
+            <Label Content="Zmień status" Width="120"/>
+            
+        </StackPanel>
+        <ListBox HorizontalAlignment="Left" Height="{Binding Height, ElementName=this}" Width="{Binding Width, ElementName=this}" ItemsSource="{Binding ListReadingOrder}" Background="Transparent" BorderThickness="0" VerticalAlignment="Top" Margin="0"/>
+       
+    </StackPanel>
+    
+
+    <!--</Grid>-->
+
+
+</UserControl>

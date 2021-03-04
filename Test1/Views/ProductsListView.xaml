@@ -1,0 +1,276 @@
+﻿<UserControl x:Class="Test1.Views.ProductsListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Test1.Views" 
+             xmlns:viewmodel="clr-namespace:Test1.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="1000" d:DesignWidth="950">
+
+    <UserControl.Resources>
+        <viewmodel:ProductViewModel x:Key="productvmodel"></viewmodel:ProductViewModel>
+       
+
+    </UserControl.Resources>
+    <Grid Margin="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1000" Height="900">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="0" Grid.Row="1">
+            <ListBox ItemsSource="{Binding ProductsList}" Name="detailList" SelectedItem="{Binding CurrentProduct, Mode=TwoWay}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" >
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border CornerRadius="10" Background="#b3b3b3" Margin="5" Padding="10" >
+                            <StackPanel Orientation="Horizontal" Width="280">
+                                <StackPanel>
+                                    <Image Width="140" Height="140" Source="{Binding Image}"/>
+                                </StackPanel>
+                                <StackPanel Width="140">
+
+                                    <TextBlock FontSize="14" Text="{Binding Name}" VerticalAlignment="Center" FontWeight="Bold" Foreground="#767474"/>
+                                    <TextBlock FontSize="12" Text="{Binding Specification}" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="#fff" />
+
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+
+        <ToggleButton Name="button" Margin="10 5 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="0">
+            <ToggleButton.Template>
+                <ControlTemplate TargetType="ToggleButton">
+                    
+                    <Border CornerRadius="10"  Width="165" Height="40">
+
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Background" Value="#b3b3b3"/>
+                                
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#ff86a5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+
+                        <TextBlock Text="Edytuj zaznaczony produkt" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#fff">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground"  Value="#ff86a5"/>
+                                            
+                                            
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Border>
+                  
+
+                </ControlTemplate>
+               
+            </ToggleButton.Template>
+        </ToggleButton>
+
+        <ToggleButton Name="button2" Margin="190 5 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="0">
+            <ToggleButton.Template>
+                <ControlTemplate TargetType="ToggleButton">
+
+                    <Border CornerRadius="10"  Width="165" Height="40">
+
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Background" Value="#b3b3b3"/>
+
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#ff86a5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+
+                        <TextBlock Text="Dodaj nowy produkt" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#fff">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground"  Value="#ff86a5"/>
+
+
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Border>
+
+
+                </ControlTemplate>
+
+            </ToggleButton.Template>
+        </ToggleButton>
+
+
+        
+            <Popup IsOpen="{Binding IsChecked, ElementName=button}" StaysOpen="True" Placement="Relative" HorizontalOffset="40" VerticalOffset="60" AllowsTransparency="True">
+            <Border  CornerRadius="20" BorderThickness="3" BorderBrush="#ff86a5" Width="800" Height="270" Background="#b3b3b3" Padding="0">
+                <Grid Height="450" Width="750" Background="#b3b3b3" Margin="0 5 0 0">
+                <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="200"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            
+            
+            <TextBlock Text="Nazwa produktu" Grid.Row="0" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+            <TextBlock Text="Specyfikacja produktu" Grid.Row="1" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+            <TextBlock Text="Cena dla ilości z zakresu : 6-10 szt." Grid.Row="2" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+            <TextBlock Text="Cena dla ilości z zakresu : 11-25 szt." Grid.Row="3" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+            <TextBlock Text="Cena dla ilości z zakresu : 26-50 szt." Grid.Row="4" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+            <TextBlock Text="Cena dla ilości z zakresu : 51-100 szt." Grid.Row="5" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+            <TextBlock Text="Cena dla ilości z zakresu : 101-250 szt." Grid.Row="6" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+            <TextBlock Text="Cena dla ilości z zakresu : 251-500 szt." Grid.Row="7" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+            
+            <TextBox Name="txtName" Grid.Row="0" Grid.Column="2" Text="{Binding Path=CurrentProduct.Name}"/>
+            <TextBox Name="txtSpec" Grid.Row="1" Grid.Column="2" Text="{Binding Path=CurrentProduct.Specification}"/>
+            <TextBox Name="txtPrice06_10" Grid.Row="2" Grid.Column="2" Text="{Binding Path=CurrentProduct.Price6_10, StringFormat={}{0:C2}}" />
+            <TextBox Name="txtPrice11_25" Grid.Row="3" Grid.Column="2" Text="{Binding Path=CurrentProduct.Price11_25,StringFormat={}{0:C2}}"/>
+            <TextBox Name="txtPrice26_50" Grid.Row="4" Grid.Column="2" Text="{Binding Path=CurrentProduct.Price26_50,StringFormat={}{0:C2}}"/>
+            <TextBox Name="txtPrice51_100" Grid.Row="5" Grid.Column="2" Text="{Binding Path=CurrentProduct.Price51_100,StringFormat={}{0:C2}}"/>
+            <TextBox Name="txtPrice101_250" Grid.Row="6" Grid.Column="2" Text="{Binding Path=CurrentProduct.Price101_250,StringFormat={}{0:C2}}"/>
+            <TextBox Name="txtPrice251_500" Grid.Row="7" Grid.Column="2" Text="{Binding Path=CurrentProduct.Price251_500,StringFormat={}{0:C2}}"/>
+            <Button Name="btnUpdate" Content="Potwierdź edycję" Width="250"  Grid.Column="1" Grid.Row="9" Command="{Binding Path=UpdateProductCommand}" BorderBrush="#81d8b8" BorderThickness="2" Background="#fff"/>
+            <Button Name="btnDelete" Content="Usuń produkt" Width="250" Grid.Column="2" Grid.Row="9" Command="{Binding Path=DeleteProductCommand}" BorderBrush="#81d8b8" BorderThickness="2" Background="#fff"/>
+            <!--<StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">-->
+                <!--<Button Name="btnAdd" Content="Add Product" Width="200" Command="{Binding Path=SaveProductCommand}"/>
+                <Button Name="btnSearch" Content="Search Product" Width="200" Command="{Binding Path=SearchProductCommand}"/>-->
+            <!--<Button Name="btnUpdate" Content="Update Product" Width="200"  Grid.Column="1" Grid.Row="12" Command="{Binding Path=UpdateProductCommand}"/>
+            <Button Name="btnDelete" Content="Delete Product" Width="200" Grid.Column="2" Grid.Row="12" Command="{Binding Path=DeleteProductCommand}"/>-->
+            <!--</StackPanel>-->
+            <TextBlock Name="txtMessage" Grid.Row="8" Grid.ColumnSpan="3" Text="{Binding Path=ProductOperationResultMessage}" />
+            <Image  HorizontalAlignment="Center" Height="178" Grid.Column="0" Grid.RowSpan="8" Grid.Row="0" VerticalAlignment="Top" Width="362" Source="{Binding Path=CurrentProduct.Image}"/>
+                    <Button Content="Dodaj zdjęcie" Grid.Column="0" HorizontalAlignment="Left" Grid.Row="9" Width="250" Command="{Binding Path=OpenFileImageProductCommand}" BorderBrush="#81d8b8" BorderThickness="2" Background="#fff"/>
+                    <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="10" Content="Zamknij okno" BorderBrush="#81d8b8" BorderThickness="2" Background="#fff" >
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="IsChecked" Storyboard.TargetName="button">
+                                    <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False" />
+                                </BooleanAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+            </Button>
+
+
+
+
+
+
+                </Grid>
+            </Border>
+        </Popup>
+
+        <Popup IsOpen="{Binding IsChecked, ElementName=button2}" StaysOpen="True" Placement="Relative" HorizontalOffset="40" VerticalOffset="60" AllowsTransparency="True" >
+            <Border  CornerRadius="20" BorderThickness="3" BorderBrush="#ff86a5" Width="800" Height="270" Background="#b3b3b3" Padding="0">
+                <Grid Height="450" Width="750" Background="#b3b3b3" Margin="0 5 0 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="200"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <TextBlock Text="Nazwa produktu" Grid.Row="0" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+                    <TextBlock Text="Specyfikacja produktu" Grid.Row="1" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+                    <TextBlock Text="Cena dla ilości z zakresu : 6-10 szt." Grid.Row="2" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+                    <TextBlock Text="Cena dla ilości z zakresu : 11-25 szt." Grid.Row="3" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+                    <TextBlock Text="Cena dla ilości z zakresu : 26-50 szt." Grid.Row="4" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+                    <TextBlock Text="Cena dla ilości z zakresu : 51-100 szt." Grid.Row="5" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+                    <TextBlock Text="Cena dla ilości z zakresu : 101-250 szt." Grid.Row="6" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+                    <TextBlock Text="Cena dla ilości z zakresu : 251-500 szt." Grid.Row="7" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#fff" />
+
+                    <TextBox Name="txtNameAddPopUp" Grid.Row="0" Grid.Column="2" Text="{Binding Path=CurrentProduct.Name}"/>
+                    <TextBox Name="txtSpecAddPopUp" Grid.Row="1" Grid.Column="2" Text="{Binding Path=CurrentProduct.Specification}"/>
+                    <TextBox Name="txtPrice06_10AddPopUp" Grid.Row="2" Grid.Column="2" Text="{Binding Path=CurrentProduct.Price6_10, StringFormat={}{0:C2}}" />
+                    <TextBox Name="txtPrice11_25AddPopUp" Grid.Row="3" Grid.Column="2" Text="{Binding Path=CurrentProduct.Price11_25,StringFormat={}{0:C2}}"/>
+                    <TextBox Name="txtPrice26_50AddPopUp" Grid.Row="4" Grid.Column="2" Text="{Binding Path=CurrentProduct.Price26_50,StringFormat={}{0:C2}}"/>
+                    <TextBox Name="txtPrice51_100AddPopUp" Grid.Row="5" Grid.Column="2" Text="{Binding Path=CurrentProduct.Price51_100,StringFormat={}{0:C2}}"/>
+                    <TextBox Name="txtPrice101_250AddPopUp" Grid.Row="6" Grid.Column="2" Text="{Binding Path=CurrentProduct.Price101_250,StringFormat={}{0:C2}}"/>
+                    <TextBox Name="txtPrice251_500AddPopUp" Grid.Row="7" Grid.Column="2" Text="{Binding Path=CurrentProduct.Price251_500,StringFormat={}{0:C2}}"/>
+                    <Button Name="btnAdd" Content="Dodaj nowy produkt" Width="500"  Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="9" Command="{Binding Path=SaveProductCommand}" BorderBrush="#81d8b8" BorderThickness="2" Background="#fff"/>
+
+                    <TextBlock Name="txtMessageAddPopUp" Grid.Row="8" Grid.ColumnSpan="3" Text="{Binding Path=ProductOperationResultMessage}" />
+                    <Image  HorizontalAlignment="Center" Height="178" Grid.Column="0" Grid.RowSpan="8" Grid.Row="0" VerticalAlignment="Top" Width="362" Source="{Binding Path=CurrentProduct.Image}"/>
+                    <Button Content="Dodaj zdjęcie" Grid.Column="0" HorizontalAlignment="Left" Grid.Row="9" Width="250" Command="{Binding Path=OpenFileImageProductCommand}" BorderBrush="#81d8b8" BorderThickness="2" Background="#fff"/>
+                    <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="10" Content="Zamknij okno" BorderBrush="#81d8b8" BorderThickness="2" Background="#fff" >
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="IsChecked" Storyboard.TargetName="button2">
+                                            <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                    </Button>
+
+
+
+
+
+
+                </Grid>
+            </Border>
+        </Popup>
+
+
+
+    </Grid>
+</UserControl>
