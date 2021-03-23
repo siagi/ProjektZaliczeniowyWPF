@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Test1.Models;
 using Test1.ViewModels;
 
@@ -39,6 +40,7 @@ namespace Test1
             //CombinedData combData = new CombinedData();
             InitializeComponent();
             this.DataContext = new NavigationViewModel();
+            
 
             //CultureInfo.CurrentCulture = new CultureInfo("pl-PL", false);
             //Database1Entities db = new Database1Entities();

@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="Test1.Views.CostView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Test1.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="1500" d:DesignWidth="1100">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition  Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Nr faktury"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Data zakupu"/>
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="Opis"/>
+        <TextBlock Grid.Row="0" Grid.Column="3" Text="Typ kosztu"/>
+        <TextBlock Grid.Row="0" Grid.Column="4" Text="Dostawca"/>
+        <TextBlock Grid.Row="0" Grid.Column="5" Text="Id dostawcy"/>
+        <TextBlock Grid.Row="0" Grid.Column="6" Text="Nr zamowienia"/>
+        <TextBlock Grid.Row="0" Grid.Column="7" Text="Wartość netto"/>
+
+        <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding CurrentCost.InvoiceNr}" />
+        <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding CurrentCost.PurchaseDate}" />
+        <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding CurrentCost.Description}"/>
+        <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding CurrentCost.CostType}" />
+        <ComboBox Grid.Row="1" Grid.Column="4" ItemsSource="{Binding SuppliersList}" SelectedItem="{Binding SelectedSupplier}"/>
+        <TextBlock Grid.Row="1" Grid.Column="5" Text="{Binding CurrentCost.SupplierId}"/>
+        <ComboBox Grid.Row="1" Grid.Column="6" ItemsSource="{Binding OrdersList}" SelectedItem="{Binding SelectedOrder}"/>
+        <TextBox Grid.Row="1" Grid.Column="7" Text="{Binding CurrentCost.ValueNetto}"/>
+        <Button Grid.Row="1" Grid.Column="8" Content="Dodaj" Command="{Binding AddCost}"/>
+
+        <!--<ListBox Grid.Row="2" Grid.ColumnSpan="8" Grid.Column="0" ItemsSource="{Binding CostsList}" Height="200"/>-->
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="9" Grid.Column="0" ItemsSource="{Binding CostsList}" Height="200" Margin="0,10,10,1190" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id"   Width="50"/>
+                <DataGridTextColumn Header="Invoice nr"  Binding="{Binding InvoiceNr}" Width="50"/>
+                <DataGridTextColumn Header="Data zakupu"  Binding="{Binding PurchaseDate}" Width="50"/>
+                <DataGridTextColumn Header="Opis"  Binding="{Binding Description}" Width="50"/>
+                <DataGridTextColumn Header="Typ wydatku"  Binding="{Binding CostType}" Width="50"/>
+                <DataGridTextColumn Header="Dostawca"  Binding="{Binding Supplier}" Width="50"/>
+                <DataGridTextColumn Header="Id dostawcy"  Binding="{Binding SupplierId}" Width="50"/>
+                <DataGridTextColumn Header="Id order"  Binding="{Binding OrderId}" Width="50"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+
+</UserControl>

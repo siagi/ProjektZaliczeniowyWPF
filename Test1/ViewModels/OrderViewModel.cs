@@ -28,6 +28,8 @@ namespace Test1.ViewModels
             productOperationObj = new ProductOperations();
             orderDetailListObj = new OrderDetailsList();
             currentOrder = new Order();
+            currentOrder.OrderCreate = DateTime.Today;
+            currentOrder.DispatchDate = DateTime.Today;
             Console.WriteLine($"Current Order ID : {currentOrder.Id}");
             listReadingOrder = new List<Order>();
             LoadCustomersList();
@@ -434,7 +436,7 @@ namespace Test1.ViewModels
             
             try
             {
-                var isAdded = orderOperationsObj.AddOrder((DateTime)CurrentOrder.OrderCreate, (DateTime)CurrentOrder.DispatchDate,SelectedCustomer, TotalOrderValue, Enum.OrderStatus.Statuses.Nowe, CurrentOrder.DeliveryName, CurrentOrder.DeliveryStreet, CurrentOrder.DeliveryPostcode, CurrentOrder.DeliveryCity, CurrentOrder.DeliveryCountry);
+                var isAdded = orderOperationsObj.AddOrder(CurrentOrder.OrderCreate, CurrentOrder.DispatchDate,SelectedCustomer, TotalOrderValue, Enum.OrderStatus.Statuses.Nowe, CurrentOrder.DeliveryName, CurrentOrder.DeliveryStreet, CurrentOrder.DeliveryPostcode, CurrentOrder.DeliveryCity, CurrentOrder.DeliveryCountry);
                 Console.WriteLine($"{orderOperationsObj.GetLastOrderIndex()}");
                 orderOperationsObj.UpdateOrderIdInDetailList(CurrentOrderDetailList);
                 LoadCurrentOrderDetalList();

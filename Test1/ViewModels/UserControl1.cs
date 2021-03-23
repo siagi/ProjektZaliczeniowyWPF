@@ -48,6 +48,7 @@ namespace Test1.ViewModels
             GetOrdersStatus();
             ConvertedObservableCollectionOrdersListToList();
             FirstToDispatchOrdersListMethod();
+        
             //Console.WriteLine(OrdersList[0].Customer.Name);
 
 
@@ -74,8 +75,25 @@ namespace Test1.ViewModels
         {
             ListOrdersList = new List<Order>(OrdersList);
             ListOrdersList.Sort((x, y) => -x.Id.CompareTo(y.Id));
+            First5ListOrderList = ListOrdersList.Take(5);
+            ListOrdersList = new List<Order>(First5ListOrderList);
 
         }
+
+        private IEnumerable<Order> first5ListOrderList;
+
+        public IEnumerable<Order> First5ListOrderList
+        {
+            get { return first5ListOrderList; }
+            set { first5ListOrderList = value;OnPropertyChanged("First3ListOrderList"); }
+        }
+
+
+        //public void First3ListOrderListMethod()
+        //{
+        //    First3ListOrderList = ListOrdersList.Take(5);
+        //    ListOrdersList = new List<Order>(First3ListOrderList);
+        //}
 
         private List<Order> firstToDispatchOrdersList;
 
@@ -90,8 +108,19 @@ namespace Test1.ViewModels
         {
             FirstToDispatchOrdersList = new List<Order>(OrdersList);
             FirstToDispatchOrdersList.Sort((x, y) => x.DispatchDate.CompareTo(y.DispatchDate));
+            First5ToDispatch = FirstToDispatchOrdersList.Take(5);
+            FirstToDispatchOrdersList = new List<Order>(First5ToDispatch);
 
         }
+
+        private IEnumerable<Order> first5ToDispatch;
+
+        public IEnumerable<Order> First5ToDispatch
+        {
+            get { return first5ToDispatch; }
+            set { first5ToDispatch = value; OnPropertyChanged("First5ToDispatch"); }
+        }
+
 
         private void LoadOrdersList()
         {

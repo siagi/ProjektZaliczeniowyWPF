@@ -11,5 +11,12 @@
                 <x:Type TypeName="enm:OrderStatus+Statuses"></x:Type>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+
+        <ObjectDataProvider x:Key="enmTypes" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enm:SupplierType+Types"></x:Type>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        
     </Application.Resources>
 </Application>

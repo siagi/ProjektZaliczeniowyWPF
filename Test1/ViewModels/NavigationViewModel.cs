@@ -19,6 +19,9 @@ namespace Test1.ViewModels
         public ICommand ProductViewCommand { get; set; }
         public ICommand UserControl1ViewCommand { get; set; }
 
+        public ICommand SupplierViewCommand { get; set; }
+        public ICommand CostViewCommand { get; set; }
+
         private object selectedViewModel;
 
         public object SelectedViewModel
@@ -36,6 +39,8 @@ namespace Test1.ViewModels
             ProductsListViewCommand = new BaseCommand(OpenProductsListView);
             ProductViewCommand = new BaseCommand(OpenProductView);
             UserControl1ViewCommand = new BaseCommand(OpenUserControl1View);
+            SupplierViewCommand = new BaseCommand(OpenSupplierView);
+            CostViewCommand = new BaseCommand(OpenCostView);
         }
 
         private void OpenAddNewCustomerView(object obj)
@@ -68,6 +73,16 @@ namespace Test1.ViewModels
         private void OpenUserControl1View(object obj)
         {
             SelectedViewModel = new UserControl1();
+        }
+
+        private void OpenSupplierView(object obj)
+        {
+            SelectedViewModel = new SupplierViewModel();
+        }
+
+        private void OpenCostView(object obj)
+        {
+            SelectedViewModel = new CostViewModel();
         }
 
 

@@ -5,11 +5,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Test1.ViewModels"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        
        
-        mc:Ignorable="d"
+        
+
+
+
+
+
+
+
+    mc:Ignorable="d"
         Title="MainWindow" Height="1566" Width="1100" xmlns:vw="clr-namespace:Test1.Views"
         >
     <Window.Resources>
+       
         <DataTemplate DataType="{x:Type local:CustomerViewModel}">
             <vw:NewCustomer/>
         </DataTemplate>
@@ -29,6 +40,13 @@
 
         <DataTemplate DataType="{x:Type local:UserControl1}">
             <vw:SummaryView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type local:SupplierViewModel}">
+            <vw:SupplierView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:CostViewModel}">
+            <vw:CostView/>
         </DataTemplate>
 
         <!--Style TOP MENU -->
@@ -178,9 +196,9 @@
             </Setter>
         </Style>
     </Window.Resources>
-
-    <Grid>
-
+    <ScrollViewer>
+        <Grid>
+      
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
             <ColumnDefinition/>
@@ -198,12 +216,14 @@
                 <Button Style="{StaticResource IconButton2}" Width="93" Height="20" Margin="25 0 25 0" Command="{Binding OrdersListViewCommand}" />
                 <Button Style="{StaticResource IconButton3}" Width="80" Height="22" Margin="25 0 25 0" Command="{Binding ProductViewCommand}" />
                 <Button Style="{StaticResource IconButton4}" Width="62" Height="20" Margin="25 0 25 0" Command="{Binding NewCustomerCommand}" />
+                <Button Style="{StaticResource IconButton4}" Width="62" Height="20" Margin="25 0 25 0" Command="{Binding SupplierViewCommand}" />
+                    <Button Style="{StaticResource IconButton4}" Width="62" Height="20" Margin="25 0 25 0" Command="{Binding CostViewCommand}" />
 
 
 
 
 
-            </StackPanel>
+                </StackPanel>
 
 
         </StackPanel>
@@ -256,5 +276,10 @@
         <vw:AddNewCustomerView x:Name="AddNewCustomer"></vw:AddNewCustomerView>
     </StackPanel>-->
 
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding UserControl1ViewCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+        </ScrollViewer>
 </Window>

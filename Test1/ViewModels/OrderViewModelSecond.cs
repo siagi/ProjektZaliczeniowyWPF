@@ -431,7 +431,7 @@ namespace Test1.ViewModels
             try
             {
                 Console.WriteLine($"{CurrentOrderDetailList.Last().ProductName}");
-                var isAdded = orderOperationsObj.AddOrder((DateTime)CurrentOrder.OrderCreate, (DateTime)CurrentOrder.DispatchDate, SelectedCustomer, TotalOrderValue, Enum.OrderStatus.Statuses.Nowe, CurrentOrder.DeliveryName, CurrentOrder.DeliveryStreet, CurrentOrder.DeliveryPostcode, CurrentOrder.DeliveryCity, CurrentOrder.DeliveryCountry);
+                var isAdded = orderOperationsObj.AddOrder(CurrentOrder.OrderCreate, CurrentOrder.DispatchDate, SelectedCustomer, TotalOrderValue, Enum.OrderStatus.Statuses.Nowe, CurrentOrder.DeliveryName, CurrentOrder.DeliveryStreet, CurrentOrder.DeliveryPostcode, CurrentOrder.DeliveryCity, CurrentOrder.DeliveryCountry);
                 Console.WriteLine($"{orderOperationsObj.GetLastOrderIndex()}");
                 orderOperationsObj.UpdateOrderIdInDetailList(CurrentOrderDetailList);
                 LoadCurrentOrderDetalList();
