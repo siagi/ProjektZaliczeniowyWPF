@@ -13,36 +13,12 @@ namespace Test1.Models
     using System.Collections.Generic;
     using System.ComponentModel;
 
-    public partial class Customer : INotifyPropertyChanged
+    public partial class Supplier : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Customer()
-        {
-            this.Orders = new HashSet<Order>();
-        }
-
         private int id;
-        public int Id
-        {
-            get { return id; }
-            set { id = value; OnPropertyChanged("Id"); }
-        }
+        public int Id { get { return id; } set { id = value; OnPropertyChanged("Id"); } }
         private string name;
-        public string Name
-        {
-            get { return name; }
-            set { name = value; OnPropertyChanged("Name"); }
-
-        }
+        public string Name { get { return name; } set { name = value; OnPropertyChanged("Name"); } }
         private string street;
         public string Street { get { return street; } set { street = value; OnPropertyChanged("Street"); } }
         private string postcode;
@@ -51,24 +27,30 @@ namespace Test1.Models
         public string City { get { return city; } set { city = value; OnPropertyChanged("City"); } }
         private string country;
         public string Country { get { return country; } set { country = value; OnPropertyChanged("Country"); } }
+        private string nip;
+        public string Nip { get { return nip; } set { nip = value; OnPropertyChanged("Nip"); } }
         private string email;
         public string Email { get { return email; } set { email = value; OnPropertyChanged("Email"); } }
+        private string phone;
+        public string Phone { get { return phone; } set { phone = value; OnPropertyChanged("Phone"); } }
+        private string type;
+        public string Type { get { return type; } set { type = value; OnPropertyChanged("Type"); } }
+        private decimal turnOver;
+        public decimal TurnOver { get { return turnOver; } set { turnOver = value; OnPropertyChanged("TurnOver"); } }
 
-        private string nip;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public string NIP
+        private void OnPropertyChanged(string property)
         {
-            get { return nip; }
-            set { nip = value; OnPropertyChanged("NIP"); }
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
         }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        private ICollection<Order> orders;
-        public ICollection<Order> Orders { get { return orders; } set { orders = value; OnPropertyChanged("Orders"); } }
 
         public override string ToString()
         {
-            return $"{this.Name}";
+            return $"{Name}";
         }
     }
 }

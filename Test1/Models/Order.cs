@@ -6,7 +6,7 @@ namespace Test1.Models
     using System.ComponentModel;
     using Test1.ViewModels;
 
-    public partial class Order : INotifyPropertyChanged,IComparable<Order>, IEquatable<Order>, IComparer<Order>
+    public partial class Order : INotifyPropertyChanged, IComparable<Order>, IEquatable<Order>, IComparer<Order>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Order()
@@ -19,8 +19,8 @@ namespace Test1.Models
         public int Id { get { return id; } set { id = value; OnPropertyChanged("Id"); } }
         private Nullable<int> customerId;
         public Nullable<int> CustomerId { get { return customerId; } set { customerId = value; OnPropertyChanged("CustomerId"); } }
-        private Nullable<System.DateTime> orderCreate;
-        public Nullable<System.DateTime> OrderCreate { get { return orderCreate; } set { orderCreate = value; OnPropertyChanged("OrderCreate"); } }
+        private DateTime orderCreate;
+        public DateTime OrderCreate { get { return orderCreate; } set { orderCreate = value; OnPropertyChanged("OrderCreate"); } }
         private DateTime dispatchDate;
         public DateTime DispatchDate { get { return dispatchDate; } set { dispatchDate = value; OnPropertyChanged("DispatchDate"); } }
         private Customer customer;
@@ -51,6 +51,9 @@ namespace Test1.Models
 
         private string customerName;
         public string CustomerName { get { return customerName; } set { customerName = value; OnPropertyChanged("CustomerName"); } }
+
+        private ICollection<Cost> costs { get; set; }
+        public ICollection<Cost> Costs { get { return costs; } set { costs = value;OnPropertyChanged("Costs"); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string property)
@@ -103,7 +106,7 @@ namespace Test1.Models
 
         public int CompareTo(Order other)
         {
-            if(other is null) return 1;
+            if (other is null) return 1;
             if (this.Equals(other)) return 0;
             return this.DispatchDate.CompareTo(other.DispatchDate);
         }
@@ -116,7 +119,10 @@ namespace Test1.Models
 
             return x.DispatchDate.CompareTo(y.DispatchDate);
         }
+
+        public override string ToString()
+        {
+            return $"Nr zamówienia: {Id}";
+        }
     }
 }
-
-

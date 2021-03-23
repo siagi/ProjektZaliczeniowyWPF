@@ -34,6 +34,7 @@
     <Property Name="Status" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
     <Property Name="TrackingNumber" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
     <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Costs" Relationship="Database1Model.FK_Cost_ToTable" FromRole="Order" ToRole="Cost" />
   </EntityType>
   <EntityType Name="OrderDetailsList">
     <Key>
@@ -117,6 +118,12 @@
       <End Role="OrderDetailsList" EntitySet="OrderDetailsLists" />
     </AssociationSet>
     <EntitySet Name="Users" EntityType="Database1Model.User" />
+    <EntitySet Name="Costs" EntityType="Database1Model.Cost" />
+    <EntitySet Name="Suppliers" EntityType="Database1Model.Supplier" />
+    <AssociationSet Name="FK_Cost_ToTable" Association="Database1Model.FK_Cost_ToTable">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="Cost" EntitySet="Costs" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="User">
     <Key>
@@ -131,4 +138,48 @@
     <Property Name="UserImage" Type="Binary" MaxLength="Max" FixedLength="false" />
     <Property Name="UserRole" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
   </EntityType>
+  <EntityType Name="Cost">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceNr" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="PurchaseDate" Type="DateTime" Precision="0" />
+    <Property Name="Description" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+    <Property Name="CostType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="Supplier" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="SupplierId" Type="Int32" />
+    <Property Name="OrderId" Type="Int32" />
+    <Property Name="ValueNetto" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="Order" Relationship="Database1Model.FK_Cost_ToTable" FromRole="Cost" ToRole="Order" />
+    <Property Name="Paid" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="60" FixedLength="true" Unicode="true" />
+    <Property Name="Street" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+    <Property Name="Postcode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Nip" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="TurnOver" Type="Decimal" Precision="19" Scale="4" />
+  </EntityType>
+  <Association Name="FK_Cost_ToTable">
+    <End Type="Database1Model.Order" Role="Order" Multiplicity="0..1" />
+    <End Type="Database1Model.Cost" Role="Cost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cost">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

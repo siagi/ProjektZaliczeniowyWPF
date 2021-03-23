@@ -1,5 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Cost">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InvoiceNr" Type="nchar" MaxLength="20" />
+    <Property Name="PurchaseDate" Type="date" />
+    <Property Name="Description" Type="nchar" MaxLength="200" />
+    <Property Name="CostType" Type="nchar" MaxLength="20" />
+    <Property Name="Supplier" Type="nchar" MaxLength="50" />
+    <Property Name="SupplierId" Type="int" />
+    <Property Name="OrderId" Type="int" />
+    <Property Name="ValueNetto" Type="money" />
+    <Property Name="Paid" Type="bit" />
+  </EntityType>
   <EntityType Name="Customer">
     <Key>
       <PropertyRef Name="Id" />
@@ -75,6 +90,22 @@
     <Property Name="Image" Type="image" />
     <Property Name="FileName" Type="nvarchar" MaxLength="100" />
   </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nchar" MaxLength="60" />
+    <Property Name="Street" Type="nchar" MaxLength="200" />
+    <Property Name="Postcode" Type="nchar" MaxLength="10" />
+    <Property Name="City" Type="nchar" MaxLength="50" />
+    <Property Name="Country" Type="nchar" MaxLength="50" />
+    <Property Name="Nip" Type="nchar" MaxLength="13" />
+    <Property Name="Email" Type="nchar" MaxLength="50" />
+    <Property Name="Phone" Type="nchar" MaxLength="25" />
+    <Property Name="Type" Type="nchar" MaxLength="20" />
+    <Property Name="TurnOver" Type="money" />
+  </EntityType>
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="Id" />
@@ -88,6 +119,18 @@
     <Property Name="UserImage" Type="image" />
     <Property Name="UserRole" Type="nchar" MaxLength="20" />
   </EntityType>
+  <Association Name="FK_Cost_ToTable">
+    <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="Cost" Type="Self.Cost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cost">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Order_ToTable">
     <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
     <End Role="Order" Type="Self.Order" Multiplicity="*" />
@@ -113,11 +156,17 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="Database1ModelStoreContainer">
+    <EntitySet Name="Cost" EntityType="Self.Cost" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetailsList" EntityType="Self.OrderDetailsList" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Cost_ToTable" Association="Self.FK_Cost_ToTable">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="Cost" EntitySet="Cost" />
+    </AssociationSet>
     <AssociationSet Name="FK_Order_ToTable" Association="Self.FK_Order_ToTable">
       <End Role="Customer" EntitySet="Customer" />
       <End Role="Order" EntitySet="Order" />

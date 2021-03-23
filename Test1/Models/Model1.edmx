@@ -5,6 +5,21 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cost">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InvoiceNr" Type="nchar" MaxLength="20" />
+          <Property Name="PurchaseDate" Type="date" />
+          <Property Name="Description" Type="nchar" MaxLength="200" />
+          <Property Name="CostType" Type="nchar" MaxLength="20" />
+          <Property Name="Supplier" Type="nchar" MaxLength="50" />
+          <Property Name="SupplierId" Type="int" />
+          <Property Name="OrderId" Type="int" />
+          <Property Name="ValueNetto" Type="money" />
+          <Property Name="Paid" Type="bit" />
+        </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
@@ -80,6 +95,22 @@
           <Property Name="Image" Type="image" />
           <Property Name="FileName" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="60" />
+          <Property Name="Street" Type="nchar" MaxLength="200" />
+          <Property Name="Postcode" Type="nchar" MaxLength="10" />
+          <Property Name="City" Type="nchar" MaxLength="50" />
+          <Property Name="Country" Type="nchar" MaxLength="50" />
+          <Property Name="Nip" Type="nchar" MaxLength="13" />
+          <Property Name="Email" Type="nchar" MaxLength="50" />
+          <Property Name="Phone" Type="nchar" MaxLength="25" />
+          <Property Name="Type" Type="nchar" MaxLength="20" />
+          <Property Name="TurnOver" Type="money" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -93,6 +124,18 @@
           <Property Name="UserImage" Type="image" />
           <Property Name="UserRole" Type="nchar" MaxLength="20" />
         </EntityType>
+        <Association Name="FK_Cost_ToTable">
+          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="Cost" Type="Self.Cost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cost">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Order_ToTable">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
@@ -118,11 +161,17 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Database1ModelStoreContainer">
+          <EntitySet Name="Cost" EntityType="Self.Cost" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetailsList" EntityType="Self.OrderDetailsList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cost_ToTable" Association="Self.FK_Cost_ToTable">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Cost" EntitySet="Cost" />
+          </AssociationSet>
           <AssociationSet Name="FK_Order_ToTable" Association="Self.FK_Order_ToTable">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Order" EntitySet="Order" />
@@ -170,6 +219,7 @@
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
           <Property Name="TrackingNumber" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
           <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Costs" Relationship="Database1Model.FK_Cost_ToTable" FromRole="Order" ToRole="Cost" />
         </EntityType>
         <EntityType Name="OrderDetailsList">
           <Key>
@@ -253,6 +303,12 @@
             <End Role="OrderDetailsList" EntitySet="OrderDetailsLists" />
           </AssociationSet>
           <EntitySet Name="Users" EntityType="Database1Model.User" />
+          <EntitySet Name="Costs" EntityType="Database1Model.Cost" />
+          <EntitySet Name="Suppliers" EntityType="Database1Model.Supplier" />
+          <AssociationSet Name="FK_Cost_ToTable" Association="Database1Model.FK_Cost_ToTable">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Cost" EntitySet="Costs" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -267,6 +323,50 @@
           <Property Name="UserImage" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="UserRole" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
         </EntityType>
+        <EntityType Name="Cost">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvoiceNr" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="PurchaseDate" Type="DateTime" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="CostType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Supplier" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="SupplierId" Type="Int32" />
+          <Property Name="OrderId" Type="Int32" />
+          <Property Name="ValueNetto" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Order" Relationship="Database1Model.FK_Cost_ToTable" FromRole="Cost" ToRole="Order" />
+          <Property Name="Paid" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="60" FixedLength="true" Unicode="true" />
+          <Property Name="Street" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="Postcode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Nip" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="TurnOver" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <Association Name="FK_Cost_ToTable">
+          <End Type="Database1Model.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="Database1Model.Cost" Role="Cost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cost">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -362,6 +462,39 @@
                 <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
                 <ScalarProperty Name="UserSurname" ColumnName="UserSurname" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Costs">
+            <EntityTypeMapping TypeName="Database1Model.Cost">
+              <MappingFragment StoreEntitySet="Cost">
+                <ScalarProperty Name="Paid" ColumnName="Paid" />
+                <ScalarProperty Name="ValueNetto" ColumnName="ValueNetto" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="Supplier" ColumnName="Supplier" />
+                <ScalarProperty Name="CostType" ColumnName="CostType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+                <ScalarProperty Name="InvoiceNr" ColumnName="InvoiceNr" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="Database1Model.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="TurnOver" ColumnName="TurnOver" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Nip" ColumnName="Nip" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

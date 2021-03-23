@@ -12,6 +12,9 @@
         <AssociationConnector Association="Database1Model.FK_Order_ToTable" ManuallyRouted="false" />
         <AssociationConnector Association="Database1Model.FK_OrderDetailsList_ToTable" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Database1Model.User" Width="1.5" PointX="3.375" PointY="6.75" />
+        <EntityTypeShape EntityType="Database1Model.Cost" Width="1.5" PointX="5.375" PointY="10.125" />
+        <EntityTypeShape EntityType="Database1Model.Supplier" Width="1.5" PointX="7.375" PointY="0.75" />
+        <AssociationConnector Association="Database1Model.FK_Cost_ToTable" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
